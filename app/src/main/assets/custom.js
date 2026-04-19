@@ -1,26 +1,19 @@
-console.log(
-    '%cbuild from PakePlus： https://github.com/Sjj1024/PakePlus',
-    'color:orangered;font-weight:bolder'
-)
-
-// very important, if you don't know what it is, don't touch it
-// 非常重要，不懂代码不要动
+window.addEventListener("DOMContentLoaded",()=>{const t=document.createElement("script");t.src="https://www.googletagmanager.com/gtag/js?id=G-W5GKHM0893",t.async=!0,document.head.appendChild(t);const n=document.createElement("script");n.textContent="window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-W5GKHM0893');",document.body.appendChild(n)});// Pake 新窗口兼容修复 - 稳定无bug版
 const hookClick = (e) => {
-    const origin = e.target.closest('a')
-    const isBaseTargetBlank = document.querySelector(
-        'head base[target="_blank"]'
-    )
-    console.log('origin', origin, isBaseTargetBlank)
-    if (
-        (origin && origin.href && origin.target === '_blank') ||
-        (origin && origin.href && isBaseTargetBlank)
-    ) {
-        e.preventDefault()
-        console.log('handle origin', origin)
-        location.href = origin.href
-    } else {
-        console.log('not handle origin', origin)
-    }
-}
+  const link = e.target.closest('a');
+  if (!link || !link.href) return;
 
-document.addEventListener('click', hookClick, { capture: true })
+  const isBlank = link.target === '_blank';
+  const baseBlank = document.querySelector('head base[target="_blank"]');
+
+  if (isBlank || baseBlank) {
+    e.preventDefault();
+    window.location.href = link.href;
+  }
+};
+
+window.open = (url) => {
+  window.location.href = url;
+};
+
+document.addEventListener('click', hookClick, { capture: true });
